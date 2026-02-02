@@ -51,6 +51,106 @@
     );
   }
 
+  /* ─── SLIDING TICKER ─── */
+  .ticker {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 32px;
+    background: rgba(0,240,255,0.03);
+    border-bottom: 1px solid rgba(0,240,255,0.15);
+    overflow: hidden;
+    z-index: 3;
+    opacity: 0;
+    animation: fadeIn 1s 2.4s ease forwards;
+  }
+  .ticker-content {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    animation: scroll-left 40s linear infinite;
+  }
+  .ticker-content span {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    color: rgba(0,240,255,0.4);
+    letter-spacing: 0.15em;
+    padding: 0 3rem;
+    white-space: nowrap;
+  }
+  @keyframes scroll-left {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* ─── FLOATING PARTICLES ─── */
+  .particles {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .particle {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: var(--cyan);
+    border-radius: 50%;
+    opacity: 0.3;
+    box-shadow: 0 0 6px var(--cyan);
+  }
+  .particle:nth-child(1) {
+    top: 20%; left: 10%;
+    animation: float1 8s ease-in-out infinite;
+  }
+  .particle:nth-child(2) {
+    top: 60%; left: 80%;
+    animation: float2 10s ease-in-out infinite;
+  }
+  .particle:nth-child(3) {
+    top: 40%; left: 30%;
+    animation: float3 12s ease-in-out infinite;
+  }
+  .particle:nth-child(4) {
+    top: 70%; left: 60%;
+    animation: float1 9s ease-in-out infinite;
+  }
+  .particle:nth-child(5) {
+    top: 15%; left: 70%;
+    animation: float2 11s ease-in-out infinite;
+  }
+  .particle:nth-child(6) {
+    top: 80%; left: 20%;
+    animation: float3 13s ease-in-out infinite;
+  }
+  .particle:nth-child(7) {
+    top: 35%; left: 85%;
+    animation: float1 10s ease-in-out infinite;
+  }
+  .particle:nth-child(8) {
+    top: 55%; left: 15%;
+    animation: float2 14s ease-in-out infinite;
+  }
+  @keyframes float1 {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(30px, -40px); }
+    50% { transform: translate(-20px, -80px); }
+    75% { transform: translate(40px, -40px); }
+  }
+  @keyframes float2 {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(-40px, 30px); }
+    50% { transform: translate(20px, 70px); }
+    75% { transform: translate(-30px, 40px); }
+  }
+  @keyframes float3 {
+    0%, 100% { transform: translate(0, 0); }
+    33% { transform: translate(50px, 20px); }
+    66% { transform: translate(-30px, 60px); }
+  }
+
   /* ─── CENTERED LAYOUT ─── */
   .container {
     position: relative;
@@ -60,15 +160,15 @@
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    padding: 2rem;
+    padding: 4rem 2rem 3rem;
     text-align: center;
   }
 
   /* ─── SHIELD ICON (SVG animated) ─── */
   .shield-wrap {
-    width: 120px;
-    height: 130px;
-    margin-bottom: 2rem;
+    width: 100px;
+    height: 110px;
+    margin-bottom: 1.2rem;
     animation: floatShield 3s ease-in-out infinite;
     position: relative;
   }
@@ -95,6 +195,70 @@
   @keyframes floatShield {
     0%,100% { transform: translateY(0); }
     50%      { transform: translateY(-8px); }
+  }
+
+  /* ─── TERMINAL BOX ─── */
+  .terminal-box {
+    width: 100%;
+    max-width: 580px;
+    background: rgba(17,24,39,0.6);
+    border: 1px solid rgba(0,240,255,0.3);
+    border-radius: 6px;
+    margin: 1rem 0 1.2rem;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideUp 0.8s 0.9s cubic-bezier(.22,1,.36,1) forwards;
+    box-shadow: 0 0 30px rgba(0,240,255,0.1);
+    backdrop-filter: blur(10px);
+  }
+  .terminal-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0.6rem 0.9rem;
+    background: rgba(0,240,255,0.05);
+    border-bottom: 1px solid rgba(0,240,255,0.2);
+    border-radius: 6px 6px 0 0;
+  }
+  .term-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+  .term-dot.red { background: #ff5f56; }
+  .term-dot.yellow { background: #ffbd2e; }
+  .term-dot.green { background: #27c93f; }
+  .term-title {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.75rem;
+    color: rgba(0,240,255,0.7);
+    margin-left: auto;
+    letter-spacing: 0.05em;
+  }
+  .terminal-body {
+    padding: 1rem 1.2rem;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.9rem;
+  }
+  .term-line {
+    color: var(--text);
+    line-height: 1.6;
+  }
+  .prompt {
+    color: var(--green);
+    margin-right: 0.5rem;
+    font-weight: 600;
+  }
+  #typing-text {
+    color: var(--text-bright);
+  }
+  .type-cursor {
+    color: var(--cyan);
+    animation: blink-cursor 1s step-end infinite;
+  }
+  @keyframes blink-cursor {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
   }
 
   /* ─── NAME ─── */
@@ -143,7 +307,7 @@
     width: 0;
     height: 1px;
     background: linear-gradient(90deg, transparent, var(--cyan), transparent);
-    margin: 1.8rem auto;
+    margin: 1.2rem auto;
     animation: expandWidth 0.8s 1s ease forwards;
   }
   @keyframes expandWidth {
@@ -158,6 +322,7 @@
     justify-content: center;
     opacity: 0;
     animation: fadeIn 0.6s 1.3s ease forwards;
+    margin-bottom: 0.5rem;
   }
   .status-item {
     display: flex;
@@ -184,7 +349,7 @@
 
   /* ─── MESSAGE BLOCK ─── */
   .message {
-    margin-top: 2.2rem;
+    margin-top: 1.5rem;
     max-width: 520px;
     opacity: 0;
     animation: fadeIn 0.7s 1.6s ease forwards;
@@ -250,6 +415,65 @@
     animation: fadeIn 0.8s 2.2s ease forwards;
   }
 
+  /* ─── CONTACT SECTION ─── */
+  .contact-section {
+    margin-top: 1.8rem;
+    opacity: 0;
+    animation: fadeIn 0.7s 1.9s ease forwards;
+  }
+  .contact-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    color: rgba(0,240,255,0.5);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+  .email-link {
+    display: inline-block;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 1rem;
+    color: var(--cyan);
+    text-decoration: none;
+    padding: 0.7rem 1.5rem;
+    border: 1px solid var(--cyan);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    letter-spacing: 0.05em;
+  }
+  .email-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0,240,255,0.2), transparent);
+    transition: left 0.5s ease;
+  }
+  .email-link:hover::before {
+    left: 100%;
+  }
+  .email-link:hover {
+    background: rgba(0,240,255,0.1);
+    box-shadow: 0 0 20px rgba(0,240,255,0.3);
+    transform: translateY(-2px);
+  }
+  .email-icon {
+    display: inline-block;
+    margin-right: 0.5rem;
+    transition: transform 0.3s ease;
+  }
+  .email-link:hover .email-icon {
+    transform: translateX(4px);
+    animation: pulse-arrow 0.6s ease infinite;
+  }
+  @keyframes pulse-arrow {
+    0%,100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
   /* ─── SHARED KEYFRAMES ─── */
   @keyframes slideUp {
     to { opacity:1; transform: translateY(0); }
@@ -262,6 +486,19 @@
   @media (max-width: 480px) {
     .status-board { gap: 1rem; }
     .corner { width: 24px; height: 24px; }
+    .container { padding: 3rem 1.5rem 2.5rem; }
+    .shield-wrap { width: 80px; height: 90px; }
+    .terminal-box { font-size: 0.85rem; }
+    .message { margin-top: 1.2rem; }
+    .contact-section { margin-top: 1.5rem; }
+  }
+  
+  @media (max-height: 800px) {
+    .shield-wrap { width: 90px; height: 100px; margin-bottom: 1rem; }
+    .terminal-box { margin: 0.8rem 0 1rem; }
+    .message { margin-top: 1.2rem; }
+    .contact-section { margin-top: 1.5rem; }
+    .name { font-size: clamp(2rem, 5vw, 3rem); }
   }
 </style>
 </head>
@@ -269,6 +506,34 @@
 
 <canvas id="matrix"></canvas>
 <div class="scanlines"></div>
+
+<!-- Sliding ticker text at top -->
+<div class="ticker">
+  <div class="ticker-content">
+    <span>THREAT INTELLIGENCE</span>
+    <span>VULNERABILITY ASSESSMENT</span>
+    <span>INCIDENT RESPONSE</span>
+    <span>SECURITY ARCHITECTURE</span>
+    <span>DIGITAL FORENSICS</span>
+    <span>RISK MANAGEMENT</span>
+    <span>THREAT INTELLIGENCE</span>
+    <span>VULNERABILITY ASSESSMENT</span>
+    <span>INCIDENT RESPONSE</span>
+    <span>SECURITY ARCHITECTURE</span>
+  </div>
+</div>
+
+<!-- Floating particles -->
+<div class="particles">
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+</div>
 
 <!-- Corner brackets -->
 <div class="corner tl"></div>
@@ -291,6 +556,21 @@
         <circle cx="50" cy="65" r="2.2" fill="var(--cyan)"/>
       </g>
     </svg>
+  </div>
+
+  <!-- Terminal Typing Animation -->
+  <div class="terminal-box">
+    <div class="terminal-header">
+      <span class="term-dot red"></span>
+      <span class="term-dot yellow"></span>
+      <span class="term-dot green"></span>
+      <span class="term-title">kritagya@security:~$</span>
+    </div>
+    <div class="terminal-body">
+      <div class="term-line">
+        <span class="prompt">$</span> <span id="typing-text"></span><span class="type-cursor">_</span>
+      </div>
+    </div>
   </div>
 
   <!-- Name -->
@@ -318,6 +598,14 @@
       The full site is currently being assembled behind encrypted layers.
       Stay tuned — something worth waiting for is loading.<span class="cursor-blink"></span>
     </p>
+  </div>
+
+  <!-- Contact Section -->
+  <div class="contact-section">
+    <div class="contact-label">// Establish Secure Connection</div>
+    <a href="mailto:your.email@domain.com" class="email-link">
+      <span class="email-icon">▸</span> your.email@domain.com
+    </a>
   </div>
 
 </div>
@@ -368,6 +656,54 @@
   }
 
   setInterval(draw, 50);
+})();
+
+// ─── TERMINAL TYPING ANIMATION ─── 
+(function(){
+  const messages = [
+    'whoami',
+    'scanning network...',
+    'analyzing vulnerabilities...',
+    'securing perimeter...',
+    'encrypting data streams...',
+    'monitoring threats...',
+    'hardening defenses...'
+  ];
+  
+  let messageIndex = 0;
+  let charIndex = 0;
+  let isDeleting = false;
+  let typingSpeed = 100;
+  
+  const typingElement = document.getElementById('typing-text');
+  
+  function type() {
+    const currentMessage = messages[messageIndex];
+    
+    if (!isDeleting && charIndex <= currentMessage.length) {
+      typingElement.textContent = currentMessage.substring(0, charIndex);
+      charIndex++;
+      typingSpeed = 100;
+    } else if (isDeleting && charIndex >= 0) {
+      typingElement.textContent = currentMessage.substring(0, charIndex);
+      charIndex--;
+      typingSpeed = 50;
+    }
+    
+    if (charIndex === currentMessage.length + 1 && !isDeleting) {
+      isDeleting = true;
+      typingSpeed = 2000; // pause at end
+    } else if (charIndex === 0 && isDeleting) {
+      isDeleting = false;
+      messageIndex = (messageIndex + 1) % messages.length;
+      typingSpeed = 500; // pause before next message
+    }
+    
+    setTimeout(type, typingSpeed);
+  }
+  
+  // Start typing after page loads
+  setTimeout(() => type(), 2000);
 })();
 </script>
 
